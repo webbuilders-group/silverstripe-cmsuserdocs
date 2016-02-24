@@ -1,0 +1,7 @@
+en:
+    CMSDocumentationViewer:
+        MENUTITLE: "Help"
+        HOME: "Home"
+        GENERAL_SILVERSTRIPE_HELP: "General SilverStripe Help"
+        MENU: "Menu"
+        DOC_INDEX: "Documentation Index"

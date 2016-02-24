@@ -1,0 +1,9 @@
+---
+Name: "cmsuserdocs"
+After:
+    - "framework/*" 
+    - "docsviewer#docsviewer"
+---
+LeftAndMain:
+    extensions:
+        - "CMSUserDocsLeftAndMain"

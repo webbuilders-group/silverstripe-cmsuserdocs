@@ -1,0 +1,26 @@
+{
+    "name": "webbuilders-group/silverstripe-cmsuserdocs",
+    "description": "@TODO",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "help", "documentation", "guide"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Ed Chipman",
+            "homepage": "http://webbuildersgroup.com",
+            "role": "Developer"
+        }
+    ],
+    "require":
+    {
+        "silverstripe/framework": "~3.1",
+		"silverstripe/docsviewer": "~1.3",
+        "composer/installers": "*"
+    },
+    "extra": {
+        "installer-name": "cmsuserdocs"
+    },
+    "support": {
+        "issues": "https://github.com/webbuilders-group/silverstripe-cmsuserdocs/issues"
+    }
+}

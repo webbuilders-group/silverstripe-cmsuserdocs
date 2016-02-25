@@ -55,5 +55,5 @@
         <% end_if %>
     <% end_loop %>
     
-    <li class="last"><a href="$SilverStripeDocLink.ATT" target="_blank"><%t CMSDocumentationViewer.GENERAL_SILVERSTRIPE_HELP "_General SilverStripe Help" %></a></li>
+    <li class="last"><a href="$SilverStripeDocLink.ATT" target="_blank"><%t CMSDocumentationViewer.GENERAL_SILVERSTRIPE_HELP "_SilverStripe CMS user help guide" %></a></li>
 </ul>

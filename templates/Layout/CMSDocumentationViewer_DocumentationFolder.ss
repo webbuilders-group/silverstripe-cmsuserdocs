@@ -1,5 +1,13 @@
 <div class="cms-content center cmsdocviewer-content cmsdocviewer-folder-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
     <div class="cms-content-fields center cms-panel-padded ui-widget" data-layout-type="border">
+        <% if $IsDocViewer %>
+            <% if $Page %>
+                <h1>$Page.Title.XML</h1>
+            <% end_if %>
+        <% else %>
+            <h1>$Title.XML</h1>
+        <% end_if %>
+        
         <% if $Introduction %>
             <div class="introduction">
                 <p>$Introduction</p>

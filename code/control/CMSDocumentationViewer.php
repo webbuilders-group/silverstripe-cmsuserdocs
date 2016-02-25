@@ -199,13 +199,13 @@ class CMSDocumentationViewer extends LeftAndMain {
 	 * @return {HTMLText}
 	 */
 	public function DocContent() {
-	    if($this->record) {
-	        return $this->renderWith($this->getTemplatesWithSuffix('_'.get_class($this->record)));
+	    /*if($this->record) {
+	        return $this->record->renderWith($this->getTemplatesWithSuffix('_'.get_class($this->record)));
 	    }
 	    
 	    if($this->action=='all') {
 	        return $this->renderWith($this->getTemplatesWithSuffix('_all'));
-	    }
+	    }*/
 	    
 	    return $this->renderWith($this->getTemplatesWithSuffix('_DocumentationFolder'));
 	}
@@ -425,13 +425,12 @@ class CMSDocumentationViewer extends LeftAndMain {
     public function getVersions() {
         return $this->getManifest()->getVersions($this->getEntity());
     }
-
+    
     /**
-     * Generate a string for the title tag in the URL.
-     * @return {string}
+     * Detection if we're in the viewer or not
      */
-    public function getTitle() {
-        return ($this->record) ? $this->record->getTitle() : null;
+    public function getIsDocViewer() {
+        return true;
     }
 
     /**

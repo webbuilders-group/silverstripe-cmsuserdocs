@@ -5,7 +5,7 @@
         <% include CMSDocumentationViewer_DocsMenu %>
         
         <ul class="minor-nav">
-            <li><a href="{$Link}$Language/all" class="cms-panel-link" data-pjax-target="CurrentForm,DocsMenu,Breadcrumbs"><%t CMSDocumentationViewer.DOC_INDEX "Documentation Index" %></a></li>
+            <li><a href="{$Link}$Language/all" class="cms-panel-link" data-pjax-target="Content"><%t CMSDocumentationViewer.DOC_INDEX "Documentation Index" %></a></li>
         </ul>
     </div>
     

@@ -37,29 +37,36 @@ class CMSDocumentationViewer extends LeftAndMain {
         
         
         //Requirements
+        Requirements::css(CMSUSERDOCS_BASE.'/thirdparty/google/code-prettify/prettify.css');
         Requirements::css(CMSUSERDOCS_BASE.'/css/CMSDocumentationViewer.css');
-        Requirements::css('https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.css');
         
-        Requirements::javascript(CMSUSERDOCS_BASE.'mysite/javascript/CMSDocumentationViewer.js');
-        Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js');
+        Requirements::add_i18n_javascript(CMSUSERDOCS_BASE.'/javascript/lang/');
+        Requirements::javascript(CMSUSERDOCS_BASE.'/thirdparty/google/code-prettify/run_prettify.js?autorun=false');
+        Requirements::javascript(CMSUSERDOCS_BASE.'/javascript/CMSDocumentationViewer.js');
     }
     
     /**
-     * @TODO
+     * Handles requests for the documentation index
+     * @param {SS_HTTPRequest}
+     * @return {SS_HTTPResponse}
      */
     public function all($request) {
         return $this->getResponseNegotiator()->respond($request);
     }
     
     /**
-     * @TODO
+     * Overloaded, it's handled differently
+     * @param {string} $action
+     * @return {bool}
      */
     public function hasAction($action) {
         return true;
     }
     
     /**
-     * @TODO
+     * Overloaded, it's handled differently
+     * @param {string} $action
+     * @return {bool}
      */
     public function checkAccessAction($action) {
         return true;
@@ -67,8 +74,8 @@ class CMSDocumentationViewer extends LeftAndMain {
     
     /**
      * Overloaded to avoid "action doesn't exist" errors - all URL parts in this controller are virtual and handled through handleRequest(), not controller methods.
-     * @param $request
-     * @param $action
+     * @param {SS_HTTPRequest} $request
+     * @param {string} $action
      * @return {SS_HTTPResponse}
      */
     public function handleAction($request, $action) {
@@ -297,7 +304,9 @@ class CMSDocumentationViewer extends LeftAndMain {
     }
     
     /**
-     * @TODO
+     * Parses the html to replace the children shortcode with the documentation index
+     * @param {string} $html
+     * @return {string}
      */
     public function replaceChildrenCalls($html) {
         $codes=new ShortcodeParser();
@@ -377,20 +386,23 @@ class CMSDocumentationViewer extends LeftAndMain {
      * @return {ArrayList}
      */
     public function Breadcrumbs($unlinked = false) {
+        $breadcrumbs=new ArrayList(array(
+                                        new ArrayData(array(
+                                                        'Link'=>$this->Link(),
+                                                        'Title'=>_t('CMSDocumentationViewer.MENUTITLE', $this->config()->menu_title)
+                                                    ))
+                                    ));
+        
         if($this->record) {
-            $breadcrumbs=new ArrayList(array(
-                                            new ArrayData(array(
-                                                            'Link'=>$this->Link(),
-                                                            'Title'=>_t("{$this->class}.MENUTITLE", $this->config()->menu_title)
-                                                        ))
-                                        ));
-            
             $breadcrumbs->merge($this->getManifest()->generateBreadcrumbs($this->record, $this->record->getEntity()));
-            
-            return $breadcrumbs;
+        }else if($this->action=='all') {
+            $breadcrumbs->push(new ArrayData(array(
+                                                'Link'=>$this->Link('all'),
+                                                'Title'=>_t('CMSDocumentationViewer.DOC_INDEX', '_Documentation Index')
+                                            )));
         }
         
-        return parent::Breadcrumbs($unlinked);
+        return $breadcrumbs;
     }
 
     /**

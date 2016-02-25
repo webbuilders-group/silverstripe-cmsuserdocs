@@ -49,7 +49,7 @@
 }
 
 .CMSDocumentationViewer .cmsdocviewer-menu ul.minor-nav a {
-    color: #CED7DC;
+    color: #BEC7CC;
     
     text-transform: uppercase;
 }
@@ -60,12 +60,94 @@
 
 
 /**** Basic Typography Styles ****/
-/* @TODO Basic Typography Styles */
 .CMSDocumentationViewer .cmsdocviewer-content h1 {
     font-size: 20px;
     font-weight: bold;
     
     margin: 16px 0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content p {
+    margin: 16px 0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content code {
+    background: #ECF0F1;
+    font: 13px/15px Monaco, "Bitstream Vera Sans Mono", Courier, monospace;
+    
+    padding: 2px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table {
+    background-color: #FAFAFA;
+    
+    width: 100%;
+    
+    border: 1px solid #C3CDCA;
+    border-collapse: collapse;
+    
+    margin-bottom: 28px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table tr:nth-child(2n) {
+    background: #EEF4F6;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table thead {
+    background: #FAFAFA;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table thead th {
+    font-weight: bold;
+    font-size: 15px;
+    
+    padding: 7px 10px 6px;
+    
+    border-right: 1px solid #C3CDCA;
+    
+    text-align: left;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table tbody tr {
+    border-top: 1px solid #C3CDCA;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content table td {
+    font-size: 15px;
+    
+    padding: 7px;
+    
+    border-right: 1px solid #C3CDCA;
+    
+    line-height: 21px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content .documentation_children h3 {
+    font-size: 18px;
+    
+    margin-top: 0;
+    padding-top: 19px;
+    
+    border-top: 1px solid #DDDDDD;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content .documentation_children ul li {
+    float: left;
+    
+    width: 30%;
+    
+    margin: 0 0 40px;
+    padding: 0 3% 0 0;
+    
+    list-style-type: none;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content .documentation_children li:nth-child(3n+1) {
+    clear: both;
 }
 
 
@@ -89,7 +171,7 @@
     box-sizing: border-box;
 }
 
-.CMSDocumentationViewer .cmsdocviewer-all-content ul.third:after, .CMSDocumentationViewer .cmsdocviewer-content .clearfix:after {
+.CMSDocumentationViewer .cmsdocviewer-all-content ul.third:after, .CMSDocumentationViewer .cmsdocviewer-content .clearfix:after, .CMSDocumentationViewer .cmsdocviewer-content .documentation_children:after {
     clear: both;
     
     display: block;
@@ -205,32 +287,6 @@
     color: #AAAAAA;
 }
 
-.CMSDocumentationViewer .cmsdocviewer-page-content pre {
-    background-color: #333333;
-    
-    display: block;
-    
-    font: 13px/20px Monaco, "Bitstream Vera Sans Mono", "Courier New", monospace;
-    color: #4E5661;
-    
-    max-height: 300px;
-    
-    border: 1px solid #E9EAED;
-    
-    margin-bottom: 32px;
-    padding: 13px 16px;
-    
-    border-radius: 4px;
-    
-    overflow: auto;
-}
-
-.CMSDocumentationViewer .cmsdocviewer-page-content pre code {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-
 .CMSDocumentationViewer .cmsdocviewer-page-content ul {
     padding-left: 30px;
     
@@ -245,21 +301,6 @@
 
 .CMSDocumentationViewer .cmsdocviewer-page-content ul li, .CMSDocumentationViewer .cmsdocviewer-page-content ol li {
     margin-bottom: 4px;
-}
-
-.CMSDocumentationViewer .cmsdocviewer-page-content .documentation_children ul li {
-    float: left;
-    
-    width: 30%;
-    
-    margin: 0 0 40px;
-    padding: 0 3% 0 0;
-    
-    list-style-type: none;
-    
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .CMSDocumentationViewer .cmsdocviewer-content .next-prev a {
@@ -286,4 +327,93 @@
     background: #C2CDD4;
     
     text-decoration: none;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre {
+    background-color: #333333;
+    
+    display: block;
+    
+    font: 13px/20px Monaco, "Bitstream Vera Sans Mono", "Courier New", monospace;
+    color: #4E5661;
+    
+    max-height: 300px;
+    
+    border: 1px solid #E9EAED;
+    
+    margin-bottom: 32px;
+    padding: 13px 16px;
+    
+    border-radius: 4px;
+    
+    overflow: auto;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre code {
+    background: transparent;
+    
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-weight: bold;
+    color: #FFFFFF;
+    
+    padding: 0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .nocode {
+    background-color: none;
+    color: #000000;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .str {
+    color: #FFA0A0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .kwd {
+    color: #F0E68C;
+    font-weight: bold;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .com {
+    color: #87CEEB;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .typ {
+    color: #98FB98;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .lit {
+    color: #CD5C5C;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .pun {
+    color: #FFFFFF;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .pln {
+    color: #FFFFFF;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .tag {
+    color: #F0E68C;
+    font-weight: bold;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .atn {
+    font-weight: bold;
+    color: #BDB76B;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .atv {
+    color: #FFA0A0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content pre .dec {
+    color: #98FB98;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-page-content ol.linenums {
+    color: #AEAEAE;
+    
+    margin-top: 0;
+    margin-bottom: 0;
 }

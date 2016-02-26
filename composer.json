@@ -1,6 +1,6 @@
 {
     "name": "webbuilders-group/silverstripe-cmsuserdocs",
-    "description": "@TODO",
+    "description": "A wrapper for silverstripe/docsviewer that pulls the documentation into the cms replacing the Help menu item.",
     "type": "silverstripe-module",
     "keywords": ["silverstripe", "help", "documentation", "guide"],
     "license": "BSD-3-Clause",

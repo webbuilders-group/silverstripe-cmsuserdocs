@@ -1,13 +1,13 @@
 CMS User Docs Viewer
 =================
-@TODO
+A wrapper for silverstripe/docsviewer that pulls the documentation into the cms replacing the Help menu item.
 
 ## Maintainer Contact
 * Ed Chipman ([UndefinedOffset](https://github.com/UndefinedOffset))
 
 ## Requirements
 * SilverStripe CMS 3.1+
-* [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer).
+* [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer)
 
 
 ## Installation
@@ -17,11 +17,7 @@ composer require webbuilders-group/silverstripe-cmsuserdocs
 ```
 
 
-If you prefer you may also install manually:
-* Download the module from here https://github.com/webbuilders-group/silverstripe-cmsuserdocs/archive/master.zip
-* Extract the downloaded archive into your site root so that the destination folder is called cmsuserdocs, opening the extracted folder should contain _config.php in the root along with other files/folders
-* Run dev/build?flush=all to regenerate the manifest
-
-
 ## Usage
-@TODO
+Documentation will now be visible in the CMS replacing the Help menu item that normally links over to the SilverStripe userdocs for your version. That link is still maintained at the bottom of the list of documentation sections in the cms.
+
+Out of the box the module will display the documentation files that have been bundled into any of your installed modules.  To configure what is shown in the list of available documentation and other information on how to write doocumentation see the detailed documentation for the [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer/blob/master/docs/en/).

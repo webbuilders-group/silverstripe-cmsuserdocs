@@ -65,6 +65,12 @@
     font-weight: bold;
     
     margin: 16px 0;
+    
+    line-height: normal;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content h2, .CMSDocumentationViewer .cmsdocviewer-content h3, .CMSDocumentationViewer .cmsdocviewer-content h4, .CMSDocumentationViewer .cmsdocviewer-content h5 {
+    line-height: normal;
 }
 
 .CMSDocumentationViewer .cmsdocviewer-content p {

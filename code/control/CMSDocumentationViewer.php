@@ -8,6 +8,14 @@ class CMSDocumentationViewer extends LeftAndMain {
                                         'handleAction'
                                     );
     
+    /**
+     * Whether to append the current documentation title path to the cms title or not
+     * @var {bool}
+     * @default true
+     * @config CMSDocumentationViewer.append_current_doc_title
+     */
+    private static $append_current_doc_title=true;
+    
     
     /**
      * The string name of the currently accessed {@link DocumentationEntity}
@@ -44,6 +52,30 @@ class CMSDocumentationViewer extends LeftAndMain {
         Requirements::javascript(CMSUSERDOCS_BASE.'/thirdparty/google/code-prettify/run_prettify.js?autorun=false');
         Requirements::javascript(CMSUSERDOCS_BASE.'/javascript/CMSDocumentationViewer.js');
     }
+    
+    /**
+     * Gets the title for this section of the cms
+	 * @return {string}
+	 */
+	public function Title() {
+	    $title=parent::Title();
+	    
+	    //If we have a record and we're not on the base url add the current page's title
+	    if($this->config()->append_current_doc_title==true && $this->getPage()) {
+	        $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->url_segment, $this->getLanguage());
+	        
+	        if(rtrim($this->request->getURL(), '/')!=$baseLink) {
+	            $pageTitle=$this->getPagePathTitle();
+	            if(!empty($pageTitle)) {
+    	           $title.=' - '.$this->getPagePathTitle();
+	            }
+	        }
+	    }else if($this->action=='all') {
+	        $title.=' - '._t('CMSDocumentationViewer.DOC_INDEX', '_Documentation Index');
+	    }
+	    
+	    return $title;
+	}
     
     /**
      * Handles requests for the documentation index
@@ -480,14 +512,44 @@ class CMSDocumentationViewer extends LeftAndMain {
     public function getSilverStripeHelpLink() {
         return LeftAndMain::config()->help_link;
     }
-
+    
     /**
      * Gets whether there is a default entity or not
-     * @return boolean
+     * @return {bool}
      * @see DocumentationManifest::getHasDefaultEntity()
      */
     public function getHasDefaultEntity() {
         return $this->getManifest()->getHasDefaultEntity();
+    }
+    
+    /**
+     * Gets the full path title for the current page
+     * @return {string}
+     */
+    public function getPagePathTitle($divider=' - ') {
+        if($page=$this->getPage()) {
+            $pathParts=explode('/', trim($page->getRelativePath(), '/'));
+            
+            // from the page from this
+            array_pop($pathParts);
+            
+            // add the module to the breadcrumb trail.
+            $pathParts[]=$page->getEntity()->getTitle();
+            
+            $titleParts=array_map(array('DocumentationHelper', 'clean_page_name'), $pathParts);
+            
+            $titleParts=array_filter($titleParts, function($val) {
+                if($val) {
+                    return $val;
+                }
+            });
+            
+            if($page->getTitle()) {
+                array_unshift($titleParts, $page->getTitle());
+            }
+            
+            return implode($divider, array_reverse($titleParts));
+        }
     }
 }
 ?>

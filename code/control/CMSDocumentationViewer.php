@@ -199,13 +199,13 @@ class CMSDocumentationViewer extends LeftAndMain {
 	 * @return {HTMLText}
 	 */
 	public function DocContent() {
-	    /*if($this->record) {
-	        return $this->record->renderWith($this->getTemplatesWithSuffix('_'.get_class($this->record)));
+	    if($this->record) {
+	        return $this->renderWith($this->getTemplatesWithSuffix('_'.get_class($this->record)));
 	    }
 	    
 	    if($this->action=='all') {
 	        return $this->renderWith($this->getTemplatesWithSuffix('_all'));
-	    }*/
+	    }
 	    
 	    return $this->renderWith($this->getTemplatesWithSuffix('_DocumentationFolder'));
 	}
@@ -299,7 +299,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         $html=$page->getHTML();
         $html=$this->replaceChildrenCalls($html);
         $html=$this->parseLinksForCMS($html);
-
+        
         return $html;
     }
     

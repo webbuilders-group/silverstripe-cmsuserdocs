@@ -1,5 +1,7 @@
 <ul class="menuList" data-pjax-fragment="DocsMenu">
-    <li><a href="$Link" class="cms-panel-link" data-pjax-target="Content"><%t CMSDocumentationViewer.HOME "_Home" %></a></li>
+    <% if not $HasDefaultEntity %>
+        <li><a href="$Link" class="cms-panel-link" data-pjax-target="Content"><%t CMSDocumentationViewer.HOME "_Home" %></a></li>
+    <% end_if %>
     
     <% loop $DocsMenu %>
         <% if $DefaultEntity %>

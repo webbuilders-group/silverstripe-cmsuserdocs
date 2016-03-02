@@ -480,5 +480,14 @@ class CMSDocumentationViewer extends LeftAndMain {
     public function getSilverStripeHelpLink() {
         return LeftAndMain::config()->help_link;
     }
+
+    /**
+     * Gets whether there is a default entity or not
+     * @return boolean
+     * @see DocumentationManifest::getHasDefaultEntity()
+     */
+    public function getHasDefaultEntity() {
+        return $this->getManifest()->getHasDefaultEntity();
+    }
 }
 ?>

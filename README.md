@@ -7,7 +7,7 @@ A wrapper for silverstripe/docsviewer that pulls the documentation into the cms 
 
 ## Requirements
 * SilverStripe CMS 3.1+
-* [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer)
+* [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer) 1.4+
 
 
 ## Installation

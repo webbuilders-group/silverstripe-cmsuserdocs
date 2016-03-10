@@ -5,3 +5,9 @@ en:
         GENERAL_SILVERSTRIPE_HELP: "SilverStripe CMS user help guide"
         MENU: "Menu"
         DOC_INDEX: "Documentation Index"
+        NEXT: "Next"
+        PREV: "Prev"
+        SEARCH_RESULTS: "Your search for <strong>&quot;{query}&quot;</strong> found {total} result(s). Showing page {current_page} of {total_pages}."
+    RebuildLuceneCMSDocsIndex:
+        TITLE: "Rebuild CMS Documentation Search Indexes"
+        DESCRIPTION: "Rebuilds the indexes used for the search engine in the CMS Documentation."

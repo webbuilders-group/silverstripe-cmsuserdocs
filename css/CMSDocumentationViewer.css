@@ -58,6 +58,42 @@
     padding: 5px 0;
 }
 
+.CMSDocumentationViewer .cmsdocviewer-menu .search-form {
+    border-bottom: 1px solid #CED7DC;
+    
+    margin-bottom: 30px;
+    padding-bottom: 7px;
+    
+    -webkit-box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
+    -moz-box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
+    box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
+}
+
+.CMSDocumentationViewer .cmsdocviewer-menu .search-form fieldset {
+    float: left;
+    
+    width: 60%;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-menu .search-form .field {
+    border: 0;
+    
+    margin: 0;
+    padding: 0;
+    
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-menu .search-form .Actions {
+    float: left;
+    
+    width: 30%;
+    
+    margin-left: 10%;
+    padding: 0;
+}
 
 /**** Basic Typography Styles ****/
 .CMSDocumentationViewer .cmsdocviewer-content h1 {
@@ -177,7 +213,7 @@
     box-sizing: border-box;
 }
 
-.CMSDocumentationViewer .cmsdocviewer-all-content ul.third:after, .CMSDocumentationViewer .cmsdocviewer-content .clearfix:after, .CMSDocumentationViewer .cmsdocviewer-content .documentation_children:after {
+.CMSDocumentationViewer .cmsdocviewer-all-content ul.third:after, .CMSDocumentationViewer .cmsdocviewer-content .clearfix:after, .CMSDocumentationViewer .cmsdocviewer-content .documentation_children:after, .CMSDocumentationViewer .cmsdocviewer-menu .clearfix:after {
     clear: both;
     
     display: block;
@@ -422,4 +458,61 @@
     
     margin-top: 0;
     margin-bottom: 0;
+}
+
+
+/**** Search Results Styles ****/
+.CMSDocumentationViewer .cmsdocviewer-results-content .result {
+    border-top: 1px solid #CED7DC;
+    
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content .result h2 {
+    margin: 0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content .result .path {
+    color: #B7C0C5;
+    
+    margin-top: 10px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content ul.pagination, .CMSDocumentationViewer .cmsdocviewer-results-content ul.pagination li {
+    margin: 0;
+    padding: 0;
+    
+    list-style-type: none;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content ul.pagination {
+    border-top: 1px solid #CED7DC;
+    
+    margin-top: 40px;
+    padding: 30px 0;
+    
+    text-align: center;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content ul.pagination li {
+    display: inline-block;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content .pagination strong, .CMSDocumentationViewer .cmsdocviewer-results-content .pagination .ellipsis, .CMSDocumentationViewer .cmsdocviewer-results-content .pagination a {
+    font-size: 14px;
+    
+    padding: 3px 5px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content .pagination .ellipsis {
+    color: #B7C0C5;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-results-content .pagination a:hover, .CMSDocumentationViewer .cmsdocviewer-results-content .pagination a:active {
+    background: #338DC1;
+    
+    color: #FFFFFF;
+    
+    text-decoration: none;
 }

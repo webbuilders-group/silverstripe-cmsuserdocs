@@ -5,8 +5,10 @@ class CMSDocumentationViewer extends LeftAndMain {
     
     private static $allowed_actions=array(
                                         'all',
-                                        'handleAction'
+                                        'handleAction',
+                                        'results'
                                     );
+    
     
     /**
      * Whether to append the current documentation title path to the cms title or not
@@ -15,6 +17,13 @@ class CMSDocumentationViewer extends LeftAndMain {
      * @config CMSDocumentationViewer.append_current_doc_title
      */
     private static $append_current_doc_title=true;
+    
+    
+    /**
+     * Search engine to use for searching documentation this must be an implementor of ICMSUserDocsSearchEngine, if left as false then the search form is not shown
+     * @var {string}
+     */
+    private static $search_engine=false;
     
     
     /**
@@ -164,7 +173,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         $request->shift(10);
         $allowed=$this->config()->allowed_actions;
         
-        if(in_array($action, $allowed)) {
+        if(in_array($action, $allowed) || $action=='results') {
             //if it's one of the allowed actions such as search or all then the URL must be prefixed with one of the allowed languages.
             return parent::handleAction($request, $action);
         }else {
@@ -237,6 +246,8 @@ class CMSDocumentationViewer extends LeftAndMain {
 	    
 	    if($this->action=='all') {
 	        return $this->renderWith($this->getTemplatesWithSuffix('_all'));
+	    }else if($this->action=='results') {
+	        return $this->getSearchResults();
 	    }
 	    
 	    return $this->renderWith($this->getTemplatesWithSuffix('_DocumentationFolder'));
@@ -550,6 +561,56 @@ class CMSDocumentationViewer extends LeftAndMain {
             
             return implode($divider, array_reverse($titleParts));
         }
+    }
+    
+    /**
+     * Gets the form used for searching
+     * @return {Form} This can return nothing if there is no search engine defined
+     */
+    public function SearchForm() {
+        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, 'ICMSUserDocsSearchEngine')) {
+            return;
+        }
+        
+        
+        $fields=new FieldList(
+                            TextField::create('q', '', $this->request->getVar('q'))
+                        );
+        
+        $actions=new FieldList(
+                                FormAction::create('results', _t('DocumentationViewer.SEARCH', 'Search'))->addExtraClass('ss-ui-action-constructive')
+                            );
+        
+        
+        $form=CMSForm::create($this, 'SearchForm', $fields, $actions)
+                        ->setHTMLID('Form_SearchForm')
+                        ->setResponseNegotiator($this->getResponseNegotiator())
+                        ->addExtraClass('search-form clearfix')
+                        ->setFormAction($this->Link($this->getLanguage().'/results'))
+                        ->setFormMethod('get')
+                        ->disableSecurityToken()
+                        ->setTemplate($this->getTemplatesWithSuffix('_SearchForm'));
+        
+        
+        //Allow extensions
+        $this->extend('updateSearchForm', $form);
+        
+        
+        return $form;
+    }
+    
+    /**
+     * Gets the rendered results from searching
+     * @return {HTMLText}
+     */
+    public function getSearchResults() {
+        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, 'ICMSUserDocsSearchEngine')) {
+            return $this->httpError(404);
+        }
+        
+        
+        $results=Injector::inst()->get($this->config()->search_engine)->getSearchResults($this->request->getVar('q'), $this->request->getVar('start'), $this->request);
+        return $results->renderWith('CMSDocumentationViewer_results');
     }
 }
 ?>

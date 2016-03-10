@@ -2,6 +2,8 @@
     <div class="cms-panel-content center">
         <h3 class="cms-panel-header"><%t CMSDocumentationViewer.MENU "_Menu" %></h3>
         
+        $SearchForm
+        
         <% include CMSDocumentationViewer_DocsMenu %>
         
         <ul class="minor-nav">

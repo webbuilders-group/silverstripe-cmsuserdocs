@@ -7,9 +7,10 @@
     display: block;
     
     font-weight: bold;
+    font-size: 1.1em;
     color: #444444;
     
-    padding: 3px 5px;
+    padding: 8px 5px;
     
     line-height: 1.5em;
 }

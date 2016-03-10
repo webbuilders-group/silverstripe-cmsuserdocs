@@ -96,6 +96,15 @@ class CMSDocumentationViewer extends LeftAndMain {
     }
     
     /**
+     * Handles requests for the documentation search results
+     * @param {SS_HTTPRequest}
+     * @return {SS_HTTPResponse}
+     */
+    public function results($request) {
+        return $this->getResponseNegotiator()->respond($request);
+    }
+    
+    /**
      * Overloaded, it's handled differently
      * @param {string} $action
      * @return {bool}
@@ -173,7 +182,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         $request->shift(10);
         $allowed=$this->config()->allowed_actions;
         
-        if(in_array($action, $allowed) || $action=='results') {
+        if(in_array($action, $allowed)) {
             //if it's one of the allowed actions such as search or all then the URL must be prefixed with one of the allowed languages.
             return parent::handleAction($request, $action);
         }else {

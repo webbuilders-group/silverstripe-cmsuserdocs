@@ -98,5 +98,19 @@
                 }
             }
         });
+        
+        /**
+         * Search Integration
+         */
+        $('.CMSDocumentationViewer .cmsdocviewer-menu form.search-form').entwine({
+            onsubmit: function(e, button) {
+                var url=$.path.addSearchParams(this.attr('action'), $(this).serialize());
+                var data={pjax: 'Content'};
+                
+                $('.cms-container').loadPanel(url, null, data);
+                
+                return false;
+            }
+        });
     });
 })(jQuery);

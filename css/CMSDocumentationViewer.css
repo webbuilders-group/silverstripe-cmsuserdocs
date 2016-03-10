@@ -461,6 +461,10 @@
     margin-bottom: 0;
 }
 
+.CMSDocumentationViewer .cmsdocviewer-page-content img {
+    max-width: 100%;
+}
+
 
 /**** Search Results Styles ****/
 .CMSDocumentationViewer .cmsdocviewer-results-content .result {

@@ -11,7 +11,7 @@ class CMSDocumentationViewer extends LeftAndMain {
     
     
     /**
-     * Whether to append the current documentation title path to the cms title or not
+     * Whether to append the current documentation path titles to the cms title or not
      * @var {bool}
      * @default true
      * @config CMSDocumentationViewer.append_current_doc_title
@@ -22,8 +22,17 @@ class CMSDocumentationViewer extends LeftAndMain {
     /**
      * Search engine to use for searching documentation this must be an implementor of ICMSUserDocsSearchEngine, if left as false then the search form is not shown
      * @var {string}
+     * @config CMSDocumentationViewer.search_engine
      */
     private static $search_engine=false;
+    
+    /**
+     * Skip the default entity in the title and breadcrumbs
+     * @var {bool}
+     * @default true
+     * @config CMSDocumentationViewer.skip_default_entity
+     */
+    private static $skip_default_entity=false;
     
     
     /**
@@ -446,7 +455,12 @@ class CMSDocumentationViewer extends LeftAndMain {
                                     ));
         
         if($this->record) {
-            $breadcrumbs->merge($this->getManifest()->generateBreadcrumbs($this->record, $this->record->getEntity()));
+            $docBreadcrumbs=$this->getManifest()->generateBreadcrumbs($this->record, $this->record->getEntity());
+            if($this->config()->skip_default_entity && $this->record->getEntity()->getIsDefaultEntity()) {
+                $docBreadcrumbs->shift();
+            }
+            
+            $breadcrumbs->merge($docBreadcrumbs);
         }else if($this->action=='all') {
             $breadcrumbs->push(new ArrayData(array(
                                                 'Link'=>$this->Link('all'),
@@ -554,7 +568,9 @@ class CMSDocumentationViewer extends LeftAndMain {
             array_pop($pathParts);
             
             // add the module to the breadcrumb trail.
-            $pathParts[]=$page->getEntity()->getTitle();
+            if($this->config()->skip_default_entity==false || $page->getEntity()->getIsDefaultEntity()==false) {
+                $pathParts[]=$page->getEntity()->getTitle();
+            }
             
             $titleParts=array_map(array('DocumentationHelper', 'clean_page_name'), $pathParts);
             

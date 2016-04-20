@@ -637,5 +637,13 @@ class CMSDocumentationViewer extends LeftAndMain {
         $results=Injector::inst()->get($this->config()->search_engine)->getSearchResults($this->request->getVar('q'), $this->request->getVar('start'), $this->request);
         return $results->renderWith('CMSDocumentationViewer_results');
     }
+    
+    /**
+     * Gets the SilverStripe docs link from the config layer
+     * @return {string}
+     */
+    public function getSilverStripeDocLink() {
+        return LeftAndMain::config()->help_link;
+    }
 }
 ?>

@@ -35,27 +35,37 @@
                 toc += '</ul></div>';
                 
                 $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-contents-holder').prepend(toc);
-                
-                // Toggle the TOC
-                $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents').attr('href', 'javascript:void()').toggle(
-                    function() {
-                        $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents ul').animate({'height':'show'}, 200, function() {
-                            $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents h4 span').html('&#9650;');
-                        });
-                    },
-                    function() {
-                        $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents ul').animate({'height':'hide'}, 200, function() {
-                            $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents h4 span').html('&#9660;');
-                        });
-                    }
-                );
-                
+            }
+        });
+        
+        /**
+         * Table of contents toggling
+         */
+        $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents').entwine({
+            onadd: function() {
                 // Make sure clicking a link won't toggle the TOC
                 $('.CMSDocumentationViewer .cmsdocviewer-page-content #table-of-contents li a').click(function (e) {
                     e.stopPropagation();
                 });
+            },
+            onclick: function(e) {
+                var list=$(this).children('ul');
+                var iconSpan=$(this).find('h4 span');
+                
+                if(list.is(':visible')==false) {
+                    console.log('show');
+                    list.animate({'height':'show'}, 200, function() {
+                        iconSpan.html('&#9650;');
+                    });
+                }else {
+                    console.log('hide');
+                    list.animate({'height':'hide'}, 200, function() {
+                        iconSpan.html('&#9660;');
+                    });
+                }
             }
         });
+        
         
         /**
          * HEADING ANCHOR LINKS

@@ -1,24 +1,20 @@
 {
     "name": "webbuilders-group/silverstripe-cmsuserdocs",
     "description": "A wrapper for silverstripe/docsviewer that pulls the documentation into the cms replacing the Help menu item.",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "keywords": ["silverstripe", "help", "documentation", "guide"],
     "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Ed Chipman",
-            "homepage": "http://webbuildersgroup.com",
+            "homepage": "https://webbuildersgroup.com",
             "role": "Developer"
         }
     ],
     "require":
     {
-        "silverstripe/framework": "~3.1",
-		"silverstripe/docsviewer": "~1.4",
+        "silverstripe/framework": "~4.1",
         "composer/installers": "*"
-    },
-    "extra": {
-        "installer-name": "cmsuserdocs"
     },
     "support": {
         "issues": "https://github.com/webbuilders-group/silverstripe-cmsuserdocs/issues"

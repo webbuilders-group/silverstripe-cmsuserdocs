@@ -6,12 +6,10 @@ A wrapper for silverstripe/docsviewer that pulls the documentation into the cms 
 * Ed Chipman ([UndefinedOffset](https://github.com/UndefinedOffset))
 
 ## Requirements
-* SilverStripe CMS 3.1+
-* [SilverStripe Documentation Viewer Module](https://github.com/silverstripe/silverstripe-docsviewer) 1.4+
+* SilverStripe CMS 4.1+
 
 
 ## Installation
-__Composer (recommended):__
 ```
 composer require webbuilders-group/silverstripe-cmsuserdocs
 ```

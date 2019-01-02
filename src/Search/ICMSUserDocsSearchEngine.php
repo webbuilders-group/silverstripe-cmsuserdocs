@@ -1,4 +1,9 @@
 <?php
+namespace WebbuildersGroup\CMSUserDocs\Search;
+
+use SilverStripe\Control\HTTPRequest;
+
+
 interface ICMSUserDocsSearchEngine {
     /**
      * Performs the search against the documentation in the system
@@ -14,6 +19,6 @@ interface ICMSUserDocsSearchEngine {
      *      NextUrl: URL for the next page
      *      SearchPages: Array List of Array Data objects containing Link, Current, and PageNumber
      */
-    public function getSearchResults($keywords, $startIndex=0, SS_HTTPRequest $request=null);
+    public function getSearchResults($keywords, $startIndex=0, HTTPRequest $request=null);
 }
 ?>

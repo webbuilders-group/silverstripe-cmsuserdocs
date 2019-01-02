@@ -4,6 +4,6 @@ After:
     - "framework/*" 
     - "docsviewer#docsviewer"
 ---
-LeftAndMain:
-    extensions:
-        - "CMSUserDocsLeftAndMain"
+SilverStripe\Admin\LeftAndMain:
+    help_links:
+        "Site Help": "admin/help"

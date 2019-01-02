@@ -1,8 +1,7 @@
 en:
-    CMSDocumentationViewer:
-        MENUTITLE: "Help"
+    WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer:
+        MENUTITLE: "Site Help"
         HOME: "Home"
-        GENERAL_SILVERSTRIPE_HELP: "SilverStripe CMS user help guide"
         MENU: "Menu"
         DOC_INDEX: "Documentation Index"
         NEXT: "Next"

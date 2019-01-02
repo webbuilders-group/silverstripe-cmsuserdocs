@@ -1,5 +1,17 @@
 <?php
-class LuceneCMSUserDocsSearch extends Object implements ICMSUserDocsSearchEngine {
+namespace WebbuildersGroup\CMSUserDocs\Search;
+
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Injector\Injectable;
+use DocumentationSearch;
+
+
+class LuceneCMSUserDocsSearch implements ICMSUserDocsSearchEngine {
+    use Injectable;
+    use Configurable;
+    
     /**
      * Location for the search index, defaults to the TEMP_FOLDER/RebuildLuceneDocsIndex
      * @var {string}
@@ -15,9 +27,9 @@ class LuceneCMSUserDocsSearch extends Object implements ICMSUserDocsSearchEngine
      * 
      * @see ICMSUserDocsSearchEngine::getSearchResults()
      */
-    public function getSearchResults($keywords, $startIndex=0, SS_HTTPRequest $request=null) {
+    public function getSearchResults($keywords, $startIndex=0, HTTPRequest $request=null) {
         //Workaround to set the search index location
-        Config::inst()->update('DocumentationSearch', 'index_location', self::config()->index_location);
+        Config::inst()->update('DocumentationSearch', 'index_location', $this->config()->index_location);
         
         
         //Search the index

@@ -1,4 +1,32 @@
 <?php
+namespace WebbuildersGroup\CMSUserDocs\Control;
+
+use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Assets\Folder;
+use SilverStripe\CMS\Search\SearchForm;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\PjaxResponseNegotiator;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\GroupedList;
+use SilverStripe\View\ArrayData;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\Parsers\ShortcodeParser;
+use SilverStripe\i18n\i18n;
+use WebbuildersGroup\CMSUserDocs\Search\ICMSUserDocsSearchEngine;
+use DocumentationFolder;
+use DocumentationHelper;
+use DocumentationManifest;
+use DocumentationPermalinks;
+
+
 class CMSDocumentationViewer extends LeftAndMain {
     private static $menu_priority=-2;
     private static $url_segment='help';
@@ -58,17 +86,17 @@ class CMSDocumentationViewer extends LeftAndMain {
         parent::init();
         
         //Workaround to point the documentation entities here instead of to the DocumentationViewer path
-        $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->get('url_segment', Config::FIRST_SET), '/');
+        $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->get('url_segment'), '/');
         Config::inst()->update('DocumentationViewer', 'link_base', $baseLink);
         
         
         //Requirements
-        Requirements::css(CMSUSERDOCS_BASE.'/thirdparty/google/code-prettify/prettify.css');
-        Requirements::css(CMSUSERDOCS_BASE.'/css/CMSDocumentationViewer.css');
+        Requirements::css('webbuilders-group/silverstripe-cmsuserdocs: thirdparty/google/code-prettify/prettify.css');
+        Requirements::css('webbuilders-group/silverstripe-cmsuserdocs: css/CMSDocumentationViewer.css');
         
-        Requirements::add_i18n_javascript(CMSUSERDOCS_BASE.'/javascript/lang/');
-        Requirements::javascript(CMSUSERDOCS_BASE.'/thirdparty/google/code-prettify/run_prettify.js?autorun=false');
-        Requirements::javascript(CMSUSERDOCS_BASE.'/javascript/CMSDocumentationViewer.js');
+        Requirements::add_i18n_javascript('webbuilders-group/silverstripe-cmsuserdocs: javascript/lang/');
+        Requirements::javascript('webbuilders-group/silverstripe-cmsuserdocs: thirdparty/google/code-prettify/run_prettify.js?autorun=false');
+        Requirements::javascript('webbuilders-group/silverstripe-cmsuserdocs: javascript/CMSDocumentationViewer.js');
     }
     
     /**
@@ -89,7 +117,7 @@ class CMSDocumentationViewer extends LeftAndMain {
 	            }
 	        }
 	    }else if($this->action=='all') {
-	        $title.=' - '._t('CMSDocumentationViewer.DOC_INDEX', '_Documentation Index');
+	        $title.=' - '._t('WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.DOC_INDEX', '_Documentation Index');
 	    }
 	    
 	    return $title;
@@ -173,7 +201,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         
         //Validate the language provided. Language is a required URL parameter. as we use it for generic interfaces and language selection.
         //If language is not set, redirects to 'en'
-        $languages=i18n::get_common_languages();
+        $languages=i18n::getData()->getLanguages();
         if(!$lang=$request->param('Lang')) {
             $lang=$request->param('Action');
             $action=$request->param('ID');
@@ -276,7 +304,7 @@ class CMSDocumentationViewer extends LeftAndMain {
      */
     public function getManifest() {
         if(!$this->manifest) {
-            $flush=SapphireTest::is_running_test() || (isset($_GET['flush']));
+            $flush=Director::isTest() || (isset($_GET['flush']));
             
             $this->manifest=new DocumentationManifest($flush);
         }
@@ -398,9 +426,9 @@ class CMSDocumentationViewer extends LeftAndMain {
      * Short code parser
      */
     public function includeChildren($args) {
-        if(isset($args['Folder'])) {
+        if(isset($args[Folder::class])) {
             $children=$this->getManifest()->getChildrenFor(
-                                                        Controller::join_links(dirname($this->record->getPath()), $args['Folder'])
+                                                        Controller::join_links(dirname($this->record->getPath()), $args[Folder::class])
                                                     );
         }else {
             $children=$this->getManifest()->getChildrenFor(
@@ -450,7 +478,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         $breadcrumbs=new ArrayList(array(
                                         new ArrayData(array(
                                                         'Link'=>$this->Link(),
-                                                        'Title'=>_t('CMSDocumentationViewer.MENUTITLE', $this->config()->menu_title)
+                                                        'Title'=>_t('WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.MENUTITLE', $this->config()->menu_title)
                                                     ))
                                     ));
         
@@ -464,7 +492,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         }else if($this->action=='all') {
             $breadcrumbs->push(new ArrayData(array(
                                                 'Link'=>$this->Link('all'),
-                                                'Title'=>_t('CMSDocumentationViewer.DOC_INDEX', '_Documentation Index')
+                                                'Title'=>_t('WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.DOC_INDEX', '_Documentation Index')
                                             )));
         }
         
@@ -593,7 +621,7 @@ class CMSDocumentationViewer extends LeftAndMain {
      * @return {Form} This can return nothing if there is no search engine defined
      */
     public function SearchForm() {
-        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, 'ICMSUserDocsSearchEngine')) {
+        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, ICMSUserDocsSearchEngine::class)) {
             return;
         }
         
@@ -607,10 +635,9 @@ class CMSDocumentationViewer extends LeftAndMain {
                             );
         
         
-        $form=CMSForm::create($this, 'SearchForm', $fields, $actions)
+        $form=Form::create($this, SearchForm::class, $fields, $actions)
                         ->setHTMLID('Form_SearchForm')
-                        ->setResponseNegotiator($this->getResponseNegotiator())
-                        ->addExtraClass('search-form clearfix')
+                        ->addExtraClass('search-form clearfix fill-height')
                         ->setFormAction($this->Link($this->getLanguage().'/results'))
                         ->setFormMethod('get')
                         ->disableSecurityToken()
@@ -629,21 +656,13 @@ class CMSDocumentationViewer extends LeftAndMain {
      * @return {HTMLText}
      */
     public function getSearchResults() {
-        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, 'ICMSUserDocsSearchEngine')) {
+        if($this->config()->search_engine===false || !class_exists($this->config()->search_engine) || !ClassInfo::classImplements($this->config()->search_engine, ICMSUserDocsSearchEngine::class)) {
             return $this->httpError(404);
         }
         
         
         $results=Injector::inst()->get($this->config()->search_engine)->getSearchResults($this->request->getVar('q'), $this->request->getVar('start'), $this->request);
         return $results->renderWith('CMSDocumentationViewer_results');
-    }
-    
-    /**
-     * Gets the SilverStripe docs link from the config layer
-     * @return {string}
-     */
-    public function getSilverStripeDocLink() {
-        return LeftAndMain::config()->help_link;
     }
 }
 ?>

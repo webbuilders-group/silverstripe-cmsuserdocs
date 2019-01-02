@@ -1,5 +1,6 @@
 <?php
-define('CMSUSERDOCS_BASE', basename(dirname(__FILE__)));
+use SilverStripe\Admin\CMSMenu;
+use WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer;
 
-Config::inst()->update('CMSDocumentationViewer', 'menu_icon', CMSUSERDOCS_BASE.'/images/menuicons/help.png');
-?>
+
+CMSMenu::remove_menu_item(str_replace('\\', '-', CMSDocumentationViewer::class));

@@ -361,9 +361,7 @@ class CMSDocumentationViewer extends LeftAndMain {
                 $mode='current';
                 
                 // add children
-                $children = $this->getManifest()->getChildrenFor(
-                                                                $entity->getPath(), ($record) ? $record->getPath() : $entity->getPath()
-                                                            );
+                $children = $this->getManifest()->getChildrenFor($entity->getPath(), ($record ? $record->getPath():$entity->getPath()));
             }else {
                 if ($current && $current->getKey()==$entity->getKey()) {
                     continue;
@@ -419,7 +417,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         $html=preg_replace('/<a href="([A-Za-z][A-Za-z0-9+\-.]*:(?:\/\/(?:(?:[A-Za-z0-9\-._~!$&\'()*+,;=:]|%[0-9A-Fa-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\.[A-Za-z0-9\-._~!$&\'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\-._~!$&\'()*+,;=]|%[0-9A-Fa-f]{2})*)(?::[0-9]*)?(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*|\/(?:(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?|(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*|)(?:\?(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@\/?]|%[0-9A-Fa-f]{2})*)?)">/', '<a href="$1" target="_blank">', $html);
         
         //Make absolute path links open in a new window
-        $html=preg_replace('/<a href="(\/(?:(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)">/', '<a href="'.Director::baseURL().'$1" target="_blank">', $html);
+        $html=preg_replace('/<a href="(?!('.preg_quote(Controller::join_links(Director::baseURL(), $this->Link()), '/').'))(\/(?:(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)">/', '<a href="'.Director::baseURL().'$1" target="_blank">', $html);
         
         //Make relative links load the cms panel
         $html=preg_replace('/<a href="((?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)">/', '<a href="$1" class="cms-panel-link" data-pjax-target="Content">', $html);
@@ -432,14 +430,11 @@ class CMSDocumentationViewer extends LeftAndMain {
      */
     public function includeChildren($args) {
         if(isset($args[Folder::class])) {
-            $children=$this->getManifest()->getChildrenFor(
-                                                        Controller::join_links(dirname($this->record->getPath()), $args[Folder::class])
-                                                    );
+            $children=$this->getManifest()->getChildrenFor(Controller::join_links(dirname($this->record->getPath()), $args[Folder::class]));
         }else {
-            $children=$this->getManifest()->getChildrenFor(
-                                                        dirname($this->record->getPath())
-                                                    );
+            $children=$this->getManifest()->getChildrenFor(dirname($this->record->getPath()));
         }
+        
         
         if(isset($args['Exclude'])) {
             $exclude=explode(',', $args['Exclude']);
@@ -453,23 +448,17 @@ class CMSDocumentationViewer extends LeftAndMain {
             }
         }
         
-        return $this->customise(new ArrayData(array(
-                                                    'Children'=>$children
-                                                )))->renderWith('Includes/DocumentationPages');
+        return $this->customise(new ArrayData(array('Children'=>$children)))->renderWith('Includes/DocumentationPages');
     }
-
+    
     /**
      * @return {ArrayList}
      */
     public function getChildren() {
-        if ($this->record instanceof DocumentationFolder) {
-            return $this->getManifest()->getChildrenFor(
-                $this->record->getPath()
-            );
-        } elseif ($this->record) {
-            return $this->getManifest()->getChildrenFor(
-                dirname($this->record->getPath())
-            );
+        if($this->record instanceof DocumentationFolder) {
+            return $this->getManifest()->getChildrenFor($this->record->getPath());
+        }else if ($this->record) {
+            return $this->getManifest()->getChildrenFor(dirname($this->record->getPath()));
         }
 
         return new ArrayList();

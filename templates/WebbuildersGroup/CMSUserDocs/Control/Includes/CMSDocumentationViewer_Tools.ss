@@ -4,7 +4,7 @@
         
         $SearchForm
         
-        <% include CMSDocumentationViewer_DocsMenu %>
+        <% include WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer_DocsMenu %>
         
         <ul class="minor-nav">
             <li><a href="{$Link}$Language/all" class="cms-panel-link" data-pjax-target="Content"><%t WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.DOC_INDEX "Documentation Index" %></a></li>

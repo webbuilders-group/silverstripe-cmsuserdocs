@@ -7,6 +7,6 @@ en:
         NEXT: "Next"
         PREV: "Prev"
         SEARCH_RESULTS: "Your search for <strong>&quot;{query}&quot;</strong> found {total} result(s). Showing page {current_page} of {total_pages}."
-    RebuildLuceneCMSDocsIndex:
+    WebbuildersGroup\CMSUserDocs\Tasks\RebuildLuceneCMSDocsIndex:
         TITLE: "Rebuild CMS Documentation Search Indexes"
         DESCRIPTION: "Rebuilds the indexes used for the search engine in the CMS Documentation."

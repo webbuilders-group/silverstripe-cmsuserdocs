@@ -1,5 +1,5 @@
-<div class="cms-content center cmsdocviewer-content cmsdocviewer-folder-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
-    <div class="cms-content-fields center cms-panel-padded ui-widget" data-layout-type="border">
+<div class="flexbox-area-grow fill-height cmsdocviewer-content cmsdocviewer-folder-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
+    <div class="panel panel--padded panel--scrollable flexbox-area-grow cms-content-fields">
         <% if $IsDocViewer %>
             <% if $Page %>
                 <h1>$Page.Title.XML</h1>
@@ -39,5 +39,5 @@
         <% end_if %>
     </div>
     
-    <% include CMSDocumentationViewer_NextPrevious %>
+    <% include WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer_NextPrevious %>
 </div>

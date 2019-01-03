@@ -1,5 +1,5 @@
-<div class="cms-content center cmsdocviewer-content cmsdocviewer-results-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
-    <div class="cms-content-fields center cms-panel-padded ui-widget" data-layout-type="border">
+<div class="flexbox-area-grow fill-height cmsdocviewer-content cmsdocviewer-folder-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
+    <div class="panel panel--padded panel--scrollable flexbox-area-grow cms-content-fields">
         <% if $Results %>
             <p class="intro"><%t WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.SEARCH_RESULTS "_Your search for <strong>&quot;{query}&quot;</strong> found {total} result(s). Showing page {current_page} of {total_pages}." query=$Query.XML total=$TotalResults current_page=$ThisPage total_pages=$TotalPages %></p>
             

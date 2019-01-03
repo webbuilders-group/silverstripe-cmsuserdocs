@@ -1,9 +1,9 @@
-<div class="cms-content center cmsdocviewer-content cmsdocviewer-all-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
-    <div class="cms-content-fields center cms-panel-padded ui-widget" data-layout-type="border">
+<div class="flexbox-area-grow fill-height cmsdocviewer-content cmsdocviewer-all-content" data-layout-type="border" data-pjax-fragment="CurrentForm">
+    <div class="panel panel--padded panel--scrollable flexbox-area-grow cms-content-fields">
         <div id="page-numbers">
             <span>
                 <% loop $AllPages.GroupedBy('FirstLetter') %>
-                    <a href="#$FirstLetter">$FirstLetter.XML</a>
+                    <a href="{$Top.LinkWithLanguage('all')}#$FirstLetter">$FirstLetter.XML</a>
                 <% end_loop %>
             </span>
         </div>

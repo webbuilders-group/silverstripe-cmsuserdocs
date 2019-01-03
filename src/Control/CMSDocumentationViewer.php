@@ -29,6 +29,7 @@ use WebbuildersGroup\CMSUserDocs\Search\ICMSUserDocsSearchEngine;
 
 
 class CMSDocumentationViewer extends LeftAndMain {
+    private static $menu_title='Site Help';
     private static $menu_priority=-2;
     private static $url_segment='help';
     
@@ -87,7 +88,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         parent::init();
         
         //Workaround to point the documentation entities here instead of to the DocumentationViewer path
-        $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->get('url_segment'), '/');
+        $baseLink=Controller::join_links('admin', $this->config()->get('url_segment'), '/');
         Config::inst()->update(DocumentationViewer::class, 'link_base', $baseLink);
         
         
@@ -102,27 +103,27 @@ class CMSDocumentationViewer extends LeftAndMain {
     
     /**
      * Gets the title for this section of the cms
-	 * @return {string}
-	 */
-	public function Title() {
-	    $title=parent::Title();
-	    
-	    //If we have a record and we're not on the base url add the current page's title
-	    if($this->config()->append_current_doc_title==true && $this->getPage()) {
-	        $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->url_segment, $this->getLanguage());
-	        
-	        if(rtrim($this->request->getURL(), '/')!=$baseLink) {
-	            $pageTitle=$this->getPagePathTitle();
-	            if(!empty($pageTitle)) {
-    	           $title.=' - '.$this->getPagePathTitle();
-	            }
-	        }
-	    }else if($this->action=='all') {
-	        $title.=' - '._t('WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.DOC_INDEX', '_Documentation Index');
-	    }
-	    
-	    return $title;
-	}
+     * @return {string}
+     */
+    public function Title() {
+        $title=parent::Title();
+        
+        //If we have a record and we're not on the base url add the current page's title
+        if($this->config()->append_current_doc_title==true && $this->getPage()) {
+            $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->url_segment, $this->getLanguage());
+            
+            if(rtrim($this->request->getURL(), '/')!=$baseLink) {
+                $pageTitle=$this->getPagePathTitle();
+                if(!empty($pageTitle)) {
+                   $title.=' - '.$this->getPagePathTitle();
+                }
+            }
+        }else if($this->action=='all') {
+            $title.=' - '._t('WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.DOC_INDEX', '_Documentation Index');
+        }
+        
+        return $title;
+    }
     
     /**
      * Handles requests for the documentation index
@@ -183,7 +184,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         }
         
         //Strip off the base url
-        $base=ltrim(Config::inst()->get(DocumentationViewer::class, 'link_base'), '/');
+        $base=ltrim(DocumentationViewer::config()->get('link_base'), '/');
         
         if($base && strpos($url, $base)!==false) {
             $url=substr(ltrim($url, '/'), strlen($base));
@@ -216,6 +217,8 @@ class CMSDocumentationViewer extends LeftAndMain {
             return $this->httpError(404);
         }
         
+        $this->currentLanguage=$lang;
+        
         
         $request->shift(10);
         $allowed=$this->config()->allowed_actions;
@@ -225,7 +228,7 @@ class CMSDocumentationViewer extends LeftAndMain {
             return parent::handleAction($request, $action);
         }else {
             //look up the manifest to see find the nearest match against the list of the URL. If the URL exists then set that as the current page to match against. strip off any extensions.
-            if ($record=$this->getManifest()->getPage($url)) {
+            if($record=$this->getManifest()->getPage($url)) {
                 $this->record=$record;
                 
                 return $this->getResponseNegotiator()->respond($request);
@@ -246,59 +249,60 @@ class CMSDocumentationViewer extends LeftAndMain {
                 }
             }
         }
+        print 'test';exit;
         
         return $this->httpError(404);
     }
     
     /**
-	 * Caution: Volatile API.
-	 * @return PjaxResponseNegotiator
-	 */
-	public function getResponseNegotiator() {
-		if(!$this->responseNegotiator) {
-			$controller=$this;
-			$this->responseNegotiator=new PjaxResponseNegotiator(
-				array(
-					'CurrentForm'=>function() use(&$controller) {
-						return $controller->DocContent();
-					},
-					'Content'=>function() use(&$controller) {
-						return $controller->renderWith($controller->getTemplatesWithSuffix('_Content'));
-					},
-					'Breadcrumbs'=>function() use (&$controller) {
-						return $controller->renderWith('CMSBreadcrumbs');
-					},
-					'DocsMenu'=>function() use (&$controller) {
-						return $controller->renderWith($controller->getTemplatesWithSuffix('_DocsMenu'));
-					},
-					'default'=>function() use(&$controller) {
-						return $controller->renderWith($controller->getViewer('show'));
-					}
-				),
-				$this->response
-			);
-		}
-		
-		return $this->responseNegotiator;
-	}
-	
-	/**
-	 * Handles rendering the content panel
-	 * @return {HTMLText}
-	 */
-	public function DocContent() {
-	    if($this->record) {
-	        return $this->renderWith($this->getTemplatesWithSuffix('_'.get_class($this->record)));
-	    }
-	    
-	    if($this->action=='all') {
-	        return $this->renderWith($this->getTemplatesWithSuffix('_all'));
-	    }else if($this->action=='results') {
-	        return $this->getSearchResults();
-	    }
-	    
-	    return $this->renderWith($this->getTemplatesWithSuffix('_DocumentationFolder'));
-	}
+     * Caution: Volatile API.
+     * @return PjaxResponseNegotiator
+     */
+    public function getResponseNegotiator() {
+        if(!$this->responseNegotiator) {
+            $controller=$this;
+            $this->responseNegotiator=new PjaxResponseNegotiator(
+                array(
+                    'CurrentForm'=>function() use(&$controller) {
+                        return $controller->DocContent();
+                    },
+                    'Content'=>function() use(&$controller) {
+                        return $controller->renderWith($controller->getTemplatesWithSuffix('_Content'));
+                    },
+                    'Breadcrumbs'=>function() use (&$controller) {
+                        return $controller->renderWith('CMSBreadcrumbs');
+                    },
+                    'DocsMenu'=>function() use (&$controller) {
+                        return $controller->renderWith($controller->getTemplatesWithSuffix('_DocsMenu'));
+                    },
+                    'default'=>function() use(&$controller) {
+                        return $controller->renderWith($controller->getViewer('show'));
+                    }
+                ),
+                $this->response
+            );
+        }
+        
+        return $this->responseNegotiator;
+    }
+    
+    /**
+     * Handles rendering the content panel
+     * @return {HTMLText}
+     */
+    public function DocContent() {
+        if($this->record) {
+            return $this->renderWith($this->getTemplatesWithSuffix('_'.$this->record->getType()));
+        }
+        
+        if($this->action=='all') {
+            return $this->renderWith($this->getTemplatesWithSuffix('_all'));
+        }else if($this->action=='results') {
+            return $this->getSearchResults();
+        }
+        
+        return $this->renderWith($this->getTemplatesWithSuffix('_DocumentationFolder'));
+    }
     
     /**
      * @return {DocumentationManifest}
@@ -615,6 +619,15 @@ class CMSDocumentationViewer extends LeftAndMain {
             
             return implode($divider, array_reverse($titleParts));
         }
+    }
+    
+    /**
+     * Gets the link with the language included
+     * @param string $action Action to be added to the link
+     * @return string
+     */
+    public function LinkWithLanguage($action=null) {
+        return Controller::join_links($this->Link(), $this->language, $action);
     }
     
     /**

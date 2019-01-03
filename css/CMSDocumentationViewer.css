@@ -1,4 +1,11 @@
 /**** Menu Styles ****/
+.CMSDocumentationViewer .cmsdocviewer-menu ul, .CMSDocumentationViewer .cmsdocviewer-menu ul li {
+    margin: 0;
+    padding: 0;
+    
+    list-style-type: none;
+}
+
 .CMSDocumentationViewer .cmsdocviewer-menu ul.menuList li + li {
     border-top: 1px solid #CED7DC;
 }
@@ -7,12 +14,9 @@
     display: block;
     
     font-weight: bold;
-    font-size: 1.1em;
     color: #444444;
     
     padding: 8px 5px;
-    
-    line-height: 1.5em;
 }
 
 .CMSDocumentationViewer .cmsdocviewer-menu ul.menuList li a.current, .CMSDocumentationViewer .cmsdocviewer-menu ul.menuList li a.section {
@@ -57,43 +61,6 @@
 
 .CMSDocumentationViewer .cmsdocviewer-menu ul.minor-nav li {
     padding: 5px 0;
-}
-
-.CMSDocumentationViewer .cmsdocviewer-menu .search-form {
-    border-bottom: 1px solid #CED7DC;
-    
-    margin-bottom: 30px;
-    padding-bottom: 7px;
-    
-    -webkit-box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
-    -moz-box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
-    box-shadow: 0 1px 0 rgba(248, 248, 248, 0.9);
-}
-
-.CMSDocumentationViewer .cmsdocviewer-menu .search-form fieldset {
-    float: left;
-    
-    width: 60%;
-}
-
-.CMSDocumentationViewer .cmsdocviewer-menu .search-form .field {
-    border: 0;
-    
-    margin: 0;
-    padding: 0;
-    
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
-
-.CMSDocumentationViewer .cmsdocviewer-menu .search-form .Actions {
-    float: left;
-    
-    width: 30%;
-    
-    margin-left: 10%;
-    padding: 0;
 }
 
 /**** Basic Typography Styles ****/
@@ -174,19 +141,25 @@
     border-top: 1px solid #DDDDDD;
 }
 
+.CMSDocumentationViewer .cmsdocviewer-content .documentation_children ul, .CMSDocumentationViewer .cmsdocviewer-content .documentation_children ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-content .documentation_children ul {
+    display: flex;
+    
+    flex-flow: row wrap;
+    
+    justify-content: space-between;
+}
+
 .CMSDocumentationViewer .cmsdocviewer-content .documentation_children ul li {
-    float: left;
+    width: 31.5%;
     
-    width: 30%;
-    
-    margin: 0 0 40px;
-    padding: 0 3% 0 0;
+    margin-bottom: 2.75%;
     
     list-style-type: none;
-    
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .CMSDocumentationViewer .cmsdocviewer-content .documentation_children li:nth-child(3n+1) {
@@ -200,6 +173,13 @@
     
     margin: 40px 0 20px;
     padding-top: 29px;
+}
+
+.CMSDocumentationViewer .cmsdocviewer-all-content ul, .CMSDocumentationViewer .cmsdocviewer-all-content ul li {
+    margin: 0;
+    padding: 0;
+    
+    list-style-type: none;
 }
 
 .CMSDocumentationViewer .cmsdocviewer-all-content ul.third li {

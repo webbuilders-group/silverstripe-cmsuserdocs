@@ -5,5 +5,5 @@
         $PageContent.RAW
     </div>
     
-    <% include CMSDocumentationViewer_NextPrevious %>
+    <% include WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer_NextPrevious %>
 </div>

@@ -1,5 +1,5 @@
 <% if $NextPage || $PreviousPage %>
-	<div class="cms-content-actions cms-content-controls south next-prev clearfix">
+	<div class="toolbar--south cms-content-actions cms-content-controls south next-prev">
 		<% if $PreviousPage %>
 			<a class="cms-panel-link prev-link" href="$PreviousPage.Link">&laquo; $PreviousPage.Title.XML</a>
 		<% end_if %>

@@ -5,7 +5,7 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
-use DocumentationSearch;
+use SilverStripe\DocsViewer\DocumentationSearch;
 
 
 class LuceneCMSUserDocsSearch implements ICMSUserDocsSearchEngine {
@@ -29,7 +29,7 @@ class LuceneCMSUserDocsSearch implements ICMSUserDocsSearchEngine {
      */
     public function getSearchResults($keywords, $startIndex=0, HTTPRequest $request=null) {
         //Workaround to set the search index location
-        Config::inst()->update('DocumentationSearch', 'index_location', $this->config()->index_location);
+        Config::inst()->update(DocumentationSearch::class, 'index_location', $this->config()->index_location);
         
         
         //Search the index

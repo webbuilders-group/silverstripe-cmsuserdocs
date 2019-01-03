@@ -10,6 +10,11 @@ use SilverStripe\Control\PjaxResponseNegotiator;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\DocsViewer\DocumentationHelper;
+use SilverStripe\DocsViewer\DocumentationManifest;
+use SilverStripe\DocsViewer\DocumentationPermalinks;
+use SilverStripe\DocsViewer\Controllers\DocumentationViewer;
+use SilverStripe\DocsViewer\Models\DocumentationFolder;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
@@ -21,10 +26,6 @@ use SilverStripe\View\Requirements;
 use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\i18n\i18n;
 use WebbuildersGroup\CMSUserDocs\Search\ICMSUserDocsSearchEngine;
-use DocumentationFolder;
-use DocumentationHelper;
-use DocumentationManifest;
-use DocumentationPermalinks;
 
 
 class CMSDocumentationViewer extends LeftAndMain {
@@ -87,7 +88,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         
         //Workaround to point the documentation entities here instead of to the DocumentationViewer path
         $baseLink=Controller::join_links($this->stat('url_base', true), $this->config()->get('url_segment'), '/');
-        Config::inst()->update('DocumentationViewer', 'link_base', $baseLink);
+        Config::inst()->update(DocumentationViewer::class, 'link_base', $baseLink);
         
         
         //Requirements
@@ -182,7 +183,7 @@ class CMSDocumentationViewer extends LeftAndMain {
         }
         
         //Strip off the base url
-        $base=ltrim(Config::inst()->get('DocumentationViewer', 'link_base'), '/');
+        $base=ltrim(Config::inst()->get(DocumentationViewer::class, 'link_base'), '/');
         
         if($base && strpos($url, $base)!==false) {
             $url=substr(ltrim($url, '/'), strlen($base));
@@ -534,7 +535,7 @@ class CMSDocumentationViewer extends LeftAndMain {
     public function AllPages() {
         $pages=$this->getManifest()->getPages();
         $output=new ArrayList();
-        $baseLink=Config::inst()->get('DocumentationViewer', 'link_base');
+        $baseLink=Config::inst()->get(DocumentationViewer::class, 'link_base');
         
         foreach($pages as $url => $page) {
             $first=strtoupper(trim(substr($page['title'], 0, 1)));
@@ -600,7 +601,7 @@ class CMSDocumentationViewer extends LeftAndMain {
                 $pathParts[]=$page->getEntity()->getTitle();
             }
             
-            $titleParts=array_map(array('DocumentationHelper', 'clean_page_name'), $pathParts);
+            $titleParts=array_map(array(DocumentationHelper::class, 'clean_page_name'), $pathParts);
             
             $titleParts=array_filter($titleParts, function($val) {
                 if($val) {

@@ -634,7 +634,7 @@ class CMSDocumentationViewer extends LeftAndMain {
                         );
         
         $actions=new FieldList(
-                                FormAction::create('results', _t('DocumentationViewer.SEARCH', 'Search'))->addExtraClass('ss-ui-action-constructive')
+                                FormAction::create('results', _t('SilverStripe\\DocsViewer\\Controllers\\DocumentationViewer.SEARCH', 'Search'))->addExtraClass('ss-ui-action-constructive')
                             );
         
         

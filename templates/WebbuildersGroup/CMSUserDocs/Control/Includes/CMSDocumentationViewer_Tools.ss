@@ -4,20 +4,10 @@
             <div class="section-heading flexbox-area-grow">
                 <span class="section-label"><%t WebbuildersGroup\\CMSUserDocs\\Control\\CMSDocumentationViewer.MENU "_Menu" %></span>
             </div>
-            
-            <div class="view-controls">
-                <button id="filters-button" class="btn btn-secondary icon-button font-icon-search btn--icon-large no-text" title="Filter"></button>               
-            </div>
         </div>
     </div>
     
     <div class="flexbox-area-grow fill-height panel--scrollable cms-panel-content cms-helper-hide-actions">
-        <div class="cms-content-filters cms-content-filters--hidden">
-            <div class="search-holder">
-                $SearchForm
-            </div>
-        </div>
-        
         <div class="panel panel--padded panel--scrollable flexbox-area-grow fill-height flexbox-display cms-content-view">
             <% include WebbuildersGroup\CMSUserDocs\Control\CMSDocumentationViewer_DocsMenu %>
             

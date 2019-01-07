@@ -13,7 +13,7 @@
     ],
     "require": {
         "silverstripe/framework": "~4.3",
-		"silverstripe/docsviewer": "~2.0"
+		"silverstripe/docsviewer": "~3.0"
     },
     "support": {
         "issues": "https://github.com/webbuilders-group/silverstripe-cmsuserdocs/issues"

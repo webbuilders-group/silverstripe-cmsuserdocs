@@ -25,7 +25,6 @@ use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\i18n\i18n;
-use WebbuildersGroup\CMSUserDocs\Search\ICMSUserDocsSearchEngine;
 
 
 class CMSDocumentationViewer extends LeftAndMain {
@@ -448,7 +447,7 @@ class CMSDocumentationViewer extends LeftAndMain {
             }
         }
         
-        return $this->customise(new ArrayData(array('Children'=>$children)))->renderWith('Includes/DocumentationPages');
+        return $this->customise(new ArrayData(array('Children'=>$children)))->renderWith('SilverStripe\\DocsViewer\\Controllers\\DocumentationPages');
     }
     
     /**

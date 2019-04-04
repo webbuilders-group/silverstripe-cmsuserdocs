@@ -248,7 +248,6 @@ class CMSDocumentationViewer extends LeftAndMain {
                 }
             }
         }
-        print 'test';exit;
         
         return $this->httpError(404);
     }
